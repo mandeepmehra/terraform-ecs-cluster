@@ -26,7 +26,7 @@ resource "aws_security_group" "lb" {
 
 
 resource "aws_lb_listener" "hello_world" {
-  load_balancer_arn = aws_lb.applb.id
+  load_balancer_arn = aws_lb.applb.arn
   port              = "80"
   protocol          = "HTTP"
 
