@@ -3,7 +3,7 @@ resource "aws_vpc" "ecsvpc" {
 }
 
 locals {
-    subnet_count = 2
+  subnet_count = 2
 }
 
 data "aws_availability_zones" "allazs" {
@@ -11,22 +11,22 @@ data "aws_availability_zones" "allazs" {
 }
 
 resource "aws_subnet" "public" {
-  count = local.subnet_count
-  cidr_block = "10.32.${count.index}.0/28"
+  count             = local.subnet_count
+  cidr_block        = "10.32.${count.index}.0/28"
   availability_zone = data.aws_availability_zones.allazs.names[count.index]
-  vpc_id = aws_vpc.ecsvpc.id
+  vpc_id            = aws_vpc.ecsvpc.id
 }
 
 resource "aws_subnet" "private" {
-  count = local.subnet_count
-  cidr_block = "10.32.${10 + count.index}.0/28"
+  count             = local.subnet_count
+  cidr_block        = "10.32.${10 + count.index}.0/28"
   availability_zone = data.aws_availability_zones.allazs.names[count.index]
-  vpc_id = aws_vpc.ecsvpc.id
+  vpc_id            = aws_vpc.ecsvpc.id
 }
 
 resource "aws_internet_gateway" "igw" {
-   vpc_id = aws_vpc.ecsvpc.id
- 
+  vpc_id = aws_vpc.ecsvpc.id
+
 }
 
 resource "aws_route" "internet_access" {
