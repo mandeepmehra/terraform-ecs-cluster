@@ -5,13 +5,21 @@ resource "aws_ecs_cluster" "ecs" {
   name = local.cluster_name
 }
 
+data "template_file" "taskdef"{
+    template = file("task-definition.json")
+    vars = {
+        image_version = var.app_version
+    }
+}
+
 resource "aws_ecs_task_definition" "hello_world" {
   family                   = "hello-world-app"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 1024
   memory                   = 2048
-#   container_definitions = file("task-definition.json")
+ # container_definitions = file("task-definition.json")
+ # container_definitions= data.template_file.taskdef.rendered
   container_definitions = <<DEFINITION
 [
   {
