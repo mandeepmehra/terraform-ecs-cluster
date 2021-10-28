@@ -11,7 +11,7 @@ resource "aws_ecs_task_definition" "hello_world" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = 1024
   memory                   = 2048
-
+#   container_definitions = file("task-definition.json")
   container_definitions = <<DEFINITION
 [
   {
